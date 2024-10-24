@@ -1,0 +1,45 @@
+services:
+
+    proxy:
+      build:
+        context: ../
+        dockerfile: ./dev/nginx/Dockerfile
+      container_name: nginx
+      hostname: nginx
+      ports:
+        - '${PROXY_PORT:-8081}:80'
+      networks:
+        - network
+
+    php:
+      build: ./php
+      networks:
+        - network
+      volumes:
+        - ../project/:/var/www/public
+
+    postgres:
+      image: postgres:alpine
+      environment:
+        POSTGRES_DB: ${POSTGRES_DB:-postgres}
+        POSTGRES_USER: ${POSTGRES_USER:-postgres}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      ports:
+        - '5432:5432'
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+      networks:
+        - network
+
+    adminer:
+      image: adminer:latest
+      ports:
+        - '${ADMINER_PORT:-8080}:8080'
+      networks:
+        - network
+
+networks:
+  network:
+
+volumes:
+  pgdata:
