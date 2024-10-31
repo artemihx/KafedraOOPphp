@@ -3,19 +3,13 @@
 namespace Controllers;
 
 use Models\Articles\Article;
+use Project\Controllers\AbstractController;
+use Project\Models\Users\UsersAuthService;
 use Services\Db;
 use View\View;
 
-class MainController
+class MainController extends AbstractController
 {
-    private $view;
-    private $db;
-
-    public function __construct()
-    {
-        $this->view = new View(__DIR__ . '/../templates');
-        $this->db = Db::getInstance();
-    }
     public function main()
     {
         $articles = Article::findAll();

@@ -1,5 +1,7 @@
 <?php
 
+ob_start();
+
 use Models\Articles\Article;
 use Models\Users\User;
 use Project\Exception\NotFoundException;
@@ -51,11 +53,16 @@ try {
     $controller->$actionName($matches[1]);
 } catch (Exception $e)
 {
-    $view = new View(__DIR__ . '/../templates/errors');
-    $view->renderHtml('500.php', ['error' => $e->getMessage()], 500);
+    $view = new View(__DIR__ . '/templates/errors');
+    $view->renderHtml('404.php', ['error' => $e->getMessage()], 500);
 }
 catch (NotFoundException $e) {
-    $view = new View(__DIR__ . '/../templates/errors');
+    $view = new View(__DIR__ . '/templates/errors');
     $view->renderHtml('404.php', ['error' => $e->getMessage()], 404);
 }
+catch (\MyProject\Exceptions\UnauthorizedException $e) {
+    $view = new \MyProject\View\View(__DIR__ . '/templates/errors');
+    $view->renderHtml('401.php', ['error' => $e->getMessage()], 401);
+}
+ob_end_flush();
 ?>
