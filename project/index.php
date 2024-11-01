@@ -5,7 +5,7 @@ use Models\Users\User;
 use Project\Exception\NotFoundException;
 use View\View;
 
-function myAutoLoader(string $classname)
+function myAutoLoader(string $classname) : void
 {
     $classname = str_replace('Project\\', '', $classname);
     $filePath = __DIR__ . '/' . str_replace('\\', '/', $classname) . '.php';

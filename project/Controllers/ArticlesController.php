@@ -18,7 +18,7 @@ class ArticlesController
         $this->view = new View(__DIR__ . '/../templates');
     }
 
-    public function view(int $articleId)
+    public function view(int $articleId): void
     {
         $article = Article::getById($articleId);
 

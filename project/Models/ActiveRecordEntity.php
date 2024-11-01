@@ -17,7 +17,7 @@ abstract class ActiveRecordEntity
         return $this->id;
     }
 
-    public function __set(string $name, $value)
+    public function __set(string $name, string $value): void
     {
         $camelCaseName = $this->underscoreToCamelCase($name);
         $this->$camelCaseName = $value;
